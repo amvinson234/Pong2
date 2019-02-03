@@ -5,6 +5,7 @@
 #include "VisibleGameObject.h"
 #include "PlayerPaddle.h"
 #include "GameBall.h"
+#include "GameObjectManager.h"
 #include <iostream>
 
 void Game::Start(void)
@@ -33,6 +34,10 @@ bool Game::IsExiting()
     else return false;
 }
 
+const GameObjectManager& Game::GetGameObjectManager()
+{
+    return _gameObjectManager;
+}
 
 void Game::GameLoop(sf::Clock& clock)
 {

@@ -36,6 +36,21 @@ void VisibleGameObject::Update(float elapsedTime)
 {
 }
 
+float VisibleGameObject::GetHeight() const
+{
+    return _sprite.getLocalBounds().height;
+}
+
+float VisibleGameObject::GetWidth() const
+{
+    return _sprite.getLocalBounds().width;
+}
+
+sf::FloatRect VisibleGameObject::GetBoundingRect() const
+{
+    return _sprite.getGlobalBounds();
+}
+
 void VisibleGameObject::SetPosition(float x, float y)
 {
     if(_isLoaded)

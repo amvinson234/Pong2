@@ -38,7 +38,7 @@ void PlayerPaddle::Update(float elapsedTime)
     }
     else
     {
-        _velocity -= 0.05*_velocity; //slow to zero
+        _velocity -= elapsedTime*5*_velocity; //subtract off 5*velocity per second
     }
    // _velocity = 0;
 

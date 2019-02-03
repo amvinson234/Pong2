@@ -15,6 +15,7 @@ public:
     int GetObjectCount() const; //const after function declaration prevents function from altering any member variables of the class?
     VisibleGameObject* Get(std::string name) const;
 
+
     void RemoveAll();
     void DrawAll(sf::RenderWindow& renderWindow);
     void UpdateAll(float elapsedTime);
