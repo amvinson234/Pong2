@@ -60,7 +60,7 @@ void Game::GameLoop(sf::Clock& clock)
         }
     case Game::Playing:
         {
-            _mainWindow.clear(sf::Color(255,0,0));
+            _mainWindow.clear(sf::Color(0,100,200));
             _gameObjectManager.UpdateAll(elapsedTime);
             _gameObjectManager.DrawAll(_mainWindow);
 
@@ -102,12 +102,15 @@ void Game::ShowMenu()
         break;
     case MainMenu::Play:
         PlayerPaddle *player1 = new PlayerPaddle();
+        PlayerPaddle *player2 = new PlayerPaddle();
         player1->SetPosition(SCREEN_WIDTH/2, SCREEN_HEIGHT - 70);
+        player2->SetPosition(SCREEN_WIDTH/2, 70);
 
         GameBall *ball = new GameBall();
         ball->SetPosition(SCREEN_WIDTH/2, (SCREEN_HEIGHT / 2));
 
         _gameObjectManager.Add("Paddle1",player1);
+        _gameObjectManager.Add("Paddle2",player2);
         _gameObjectManager.Add("Ball",ball);
         _gameState = Game::Playing;
         break;

@@ -47,10 +47,11 @@ void GameBall::Update(float elapsedTime)
     }
 
     PlayerPaddle *player1 = dynamic_cast<PlayerPaddle*>(Game::GetGameObjectManager().Get("Paddle1"));
-
-    if(player1 != NULL)
+    PlayerPaddle *player2 = dynamic_cast<PlayerPaddle*>(Game::GetGameObjectManager().Get("Paddle2"));
+    if(player1 != NULL && player2 != NULL)
     {
         sf::FloatRect p1BB = player1->GetBoundingRect();
+        sf::FloatRect p2BB = player2->GetBoundingRect();
         if(p1BB.intersects(GetBoundingRect()))
         {
             _angle = 360 - (_angle - 180);
@@ -81,13 +82,38 @@ void GameBall::Update(float elapsedTime)
             _velocity += 5.0f; //add to velocity after each hit of the paddle
         }
 
-        if(GetPosition().y - GetHeight()/2 <= 0)
+
+        if(p2BB.intersects(GetBoundingRect()))
         {
-            _angle = 180 - _angle;
+            _angle = 360 - (_angle - 180);
+            if(_angle > 360) _angle -= 360;
+
             moveByY *= -1;
+
+            //make sure ball isn't inside paddle
+            if(GetBoundingRect().top < player2->GetBoundingRect().top + player2->GetBoundingRect().height)
+            {
+                SetPosition(GetPosition().x, player2->GetBoundingRect().top + player2->GetBoundingRect().height + GetWidth()/2 + 1);
+            }
+
+            float playerVelocity = player2->GetVelocity();
+
+            if(playerVelocity < 0)
+            {
+                //moving left
+                _angle -= 20; //give angle an extra kick leftward if paddle moving left
+                if(_angle < 0) _angle = 360 - _angle;
+            }
+            else if (playerVelocity > 0)
+            {
+                //moving right
+                _angle += 20; //give angle extra kick rightward if paddle moving right
+                if(_angle > 360) _angle -= 360;
+            }
+            _velocity += 5.0f; //add to velocity after each hit of the paddle
         }
 
-        if(GetPosition().y + GetHeight()/2 + moveByY >= Game::SCREEN_HEIGHT)
+        if(GetPosition().y + GetHeight()/2 + moveByY >= Game::SCREEN_HEIGHT || GetPosition().y - GetHeight()/2 + moveByY < 0)
         {
             //If fell below lower bounds
             //Move to middle of the screen for now and randomize angle

@@ -17,8 +17,6 @@ void VisibleGameObject::Load(std::string filename)
         _isLoaded = false;
     }
     _filename = filename;
-    //sf::Texture texture;
-    //texture.loadFromImage(_image);
     _sprite.setTexture(_image);
     _isLoaded = true;
 

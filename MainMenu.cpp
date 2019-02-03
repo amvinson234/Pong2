@@ -19,8 +19,8 @@ MainMenu::MenuResult MainMenu::Show(sf::RenderWindow& window)
     exit_text.setString("EXIT");
     play_text.setCharacterSize(60);
     exit_text.setCharacterSize(60);
-    play_text.setFillColor(sf::Color::Red);
-    exit_text.setFillColor(sf::Color::Red);
+    play_text.setFillColor(sf::Color(0,100,200));
+    exit_text.setFillColor(sf::Color(0,100,200));
     sf::FloatRect playBounds = play_text.getLocalBounds();
     sf::FloatRect exitBounds = exit_text.getLocalBounds();
 

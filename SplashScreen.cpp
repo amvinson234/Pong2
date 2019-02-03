@@ -24,8 +24,8 @@ void SplashScreen::Show(sf::RenderWindow& renderWindow)
     subtitle.setString("\n\n The Sequel!");
     title.setCharacterSize(70);
     subtitle.setCharacterSize(45);
-    title.setFillColor(sf::Color::Red);
-    subtitle.setFillColor(sf::Color::Red);
+    title.setFillColor(sf::Color(0,100,200));
+    subtitle.setFillColor(sf::Color(0,100,200));
     title.setStyle(sf::Text::Bold);
     subtitle.setStyle(sf::Text::Bold);
     sf::FloatRect titleBounds = title.getLocalBounds();
