@@ -4,11 +4,6 @@
 
 MainMenu::MenuResult MainMenu::Show(sf::RenderWindow& window)
 {
-    //Load menu image from file
-  //  sf::Image image;
-//    image.LoadFromFile("images/mainmenu.png");
-  //  sf::Sprite sprite(image);
-
     sf::Text play_text;
     sf::Text exit_text;
     sf::Font font;
@@ -69,7 +64,6 @@ MainMenu::MenuResult MainMenu::GetMenuResponse(sf::RenderWindow& window)
     {
         while(window.pollEvent(menuEvent))
         {
-            //menuEvent.type
             if( menuEvent.type == sf::Event::MouseButtonPressed )
                 return HandleClick(menuEvent.mouseButton.x, menuEvent.mouseButton.y);
             if(menuEvent.type == sf::Event::Closed)

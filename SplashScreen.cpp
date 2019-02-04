@@ -3,17 +3,6 @@
 
 void SplashScreen::Show(sf::RenderWindow& renderWindow)
 {
-    /*
-    sf::Image image;
-    if(image.loadFromFile("images/Splashscreen.png") != true)
-    {
-        return;
-    }
-    sf::Texture texture;
-    texture.loadFromImage(image);
-    sf::Sprite sprite(texture);
-    */
-
     sf::Text title;
     sf::Text subtitle;
     sf::Font font;

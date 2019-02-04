@@ -65,20 +65,20 @@ void GameBall::Update(float elapsedTime)
             moveByY *= -1;
 
             //make sure ball isn't inside paddle
-            if(GetBoundingRect().top - GetBoundingRect().height > player1->GetBoundingRect().top)
+            if(GetBoundingRect().top + GetBoundingRect().height > player1->GetBoundingRect().top)
             {
                 SetPosition(GetPosition().x, player1->GetBoundingRect().top - GetWidth()/2 - 1);
             }
 
             float playerVelocity = player1->GetVelocity();
 
-            if(playerVelocity < 0)
+            if(playerVelocity < 10)
             {
                 //moving left
                 _angle -= 20; //give angle an extra kick leftward if paddle moving left
                 if(_angle < 0) _angle = 360 - _angle;
             }
-            else if (playerVelocity > 0)
+            else if (playerVelocity > 10)
             {
                 //moving right
                 _angle += 20; //give angle extra kick rightward if paddle moving right
@@ -103,13 +103,13 @@ void GameBall::Update(float elapsedTime)
 
             float playerVelocity = player2->GetVelocity();
 
-            if(playerVelocity < 0)
+            if(playerVelocity < 10)
             {
                 //moving left
                 _angle -= 20; //give angle an extra kick leftward if paddle moving left
                 if(_angle < 0) _angle = 360 - _angle;
             }
-            else if (playerVelocity > 0)
+            else if (playerVelocity > 10)
             {
                 //moving right
                 _angle += 20; //give angle extra kick rightward if paddle moving right

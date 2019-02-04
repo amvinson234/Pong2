@@ -30,7 +30,6 @@ float PlayerPaddle::GetVelocity() const
 
 void PlayerPaddle::Update(float elapsedTime)
 {
-//    string player;
     sf::Keyboard::Key key_right;
     sf::Keyboard::Key key_left;
     if (dynamic_cast<PlayerPaddle*>(Game::GetGameObjectManager().Get("Paddle1")) == this)
@@ -54,12 +53,10 @@ void PlayerPaddle::Update(float elapsedTime)
     {
         _velocity -= elapsedTime*5*_velocity; //subtract off 5*velocity per second
     }
-   // _velocity = 0;
 
 
     if(_velocity > _maxVelocity) _velocity = _maxVelocity;
     if(_velocity < -_maxVelocity) _velocity = -_maxVelocity;
-    //std::cerr << _velocity << std::endl;
     sf::Vector2f pos = GetPosition();
 
 
