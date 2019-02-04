@@ -24,6 +24,8 @@ public:
     virtual sf::Vector2f GetPosition() const;
     virtual bool IsLoaded() const;
 
+    virtual void setAsLoaded();
+
 protected:
     sf::Sprite& GetSprite();
 

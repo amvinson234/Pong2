@@ -6,6 +6,7 @@
 #include <cmath>
 #include <cassert>
 #include <iostream>
+#include "ScoreBoard.h"
 
 GameBall::GameBall() :
     _velocity(220.0f),
@@ -46,8 +47,12 @@ void GameBall::Update(float elapsedTime)
         moveByX = -moveByX;
     }
 
+
     PlayerPaddle *player1 = dynamic_cast<PlayerPaddle*>(Game::GetGameObjectManager().Get("Paddle1"));
     PlayerPaddle *player2 = dynamic_cast<PlayerPaddle*>(Game::GetGameObjectManager().Get("Paddle2"));
+    ScoreBoard *scoreBoard = dynamic_cast<ScoreBoard*>(Game::GetScoreBoard());
+
+
     if(player1 != NULL && player2 != NULL)
     {
         sf::FloatRect p1BB = player1->GetBoundingRect();
@@ -113,15 +118,20 @@ void GameBall::Update(float elapsedTime)
             _velocity += 5.0f; //add to velocity after each hit of the paddle
         }
 
-        if(GetPosition().y + GetHeight()/2 + moveByY >= Game::SCREEN_HEIGHT || GetPosition().y - GetHeight()/2 + moveByY < 0)
+        if(GetPosition().y + GetHeight()/2 + moveByY >= Game::SCREEN_HEIGHT
+         || GetPosition().y - GetHeight()/2 + moveByY < 0)
         {
+            if(GetPosition().y - GetHeight()/2 + moveByY < 0) scoreBoard->UpdateScore1();
+            if(GetPosition().y + GetHeight()/2 + moveByY >= Game::SCREEN_HEIGHT)  scoreBoard->UpdateScore2();
             //If fell below lower bounds
             //Move to middle of the screen for now and randomize angle
             GetSprite().setPosition(Game::SCREEN_WIDTH/2, Game::SCREEN_HEIGHT/2);
             _angle = rand() % 361;
             _velocity = 220.0f;
             _elapsedTimeSinceStart = 0.0f;
+
         }
+
 
         GetSprite().move(moveByX,moveByY);
     }

@@ -6,6 +6,7 @@
 #include "PlayerPaddle.h"
 #include "GameBall.h"
 #include "GameObjectManager.h"
+#include "ScoreBoard.h"
 #include <iostream>
 
 void Game::Start(void)
@@ -43,7 +44,6 @@ void Game::GameLoop(sf::Clock& clock)
 {
     sf::Event currentEvent;
     _mainWindow.pollEvent(currentEvent);
-
     float elapsedTime = clock.getElapsedTime().asSeconds();
     clock.restart();
     switch(_gameState)
@@ -51,6 +51,7 @@ void Game::GameLoop(sf::Clock& clock)
     case Game::ShowingMenu:
         {
             ShowMenu();
+            clock.restart();
             break;
         }
     case Game::ShowingSplash:
@@ -61,8 +62,13 @@ void Game::GameLoop(sf::Clock& clock)
     case Game::Playing:
         {
             _mainWindow.clear(sf::Color(0,100,200));
+
+            _scoreBoard->Draw(_mainWindow);
+            _scoreBoard->Update(elapsedTime);
+
             _gameObjectManager.UpdateAll(elapsedTime);
             _gameObjectManager.DrawAll(_mainWindow);
+
 
             _mainWindow.display();
 
@@ -74,6 +80,21 @@ void Game::GameLoop(sf::Clock& clock)
             {
                 _gameObjectManager.RemoveAll();
                 _gameState = Game::ShowingMenu;
+                _scoreBoard->~ScoreBoard();
+            }
+            if(currentEvent.type == sf::Event::KeyPressed && currentEvent.key.code == sf::Keyboard::P)
+            {
+                std::cerr << " Paused ? " << std::endl;
+                while(1)
+                {
+                    _mainWindow.pollEvent(currentEvent);
+                    if(currentEvent.type == sf::Event::KeyPressed && currentEvent.key.code == sf::Keyboard::P)
+                    {
+                        std::cerr << " end pause " << std::endl;
+                        break;
+                    }
+                    clock.restart();
+                }
             }
 
         }
@@ -103,6 +124,7 @@ void Game::ShowMenu()
     case MainMenu::Play:
         PlayerPaddle *player1 = new PlayerPaddle();
         PlayerPaddle *player2 = new PlayerPaddle();
+
         player1->SetPosition(SCREEN_WIDTH/2, SCREEN_HEIGHT - 70);
         player2->SetPosition(SCREEN_WIDTH/2, 70);
 
@@ -113,10 +135,19 @@ void Game::ShowMenu()
         _gameObjectManager.Add("Paddle2",player2);
         _gameObjectManager.Add("Ball",ball);
         _gameState = Game::Playing;
+
+        _scoreBoard = new ScoreBoard();
+
         break;
     }
+}
+
+ScoreBoard* Game::GetScoreBoard()
+{
+    return _scoreBoard;
 }
 
 Game::GameState Game::_gameState = Uninitialized;
 sf::RenderWindow Game::_mainWindow;
 GameObjectManager Game::_gameObjectManager;
+ScoreBoard *Game::_scoreBoard;

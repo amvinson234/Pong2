@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "PlayerPaddle.h"
 #include "GameObjectManager.h"
+#include "ScoreBoard.h"
 
 class Game
 {
@@ -18,6 +19,8 @@ public:
 
     const static GameObjectManager& GetGameObjectManager();
 
+    static ScoreBoard* GetScoreBoard();
+
 private:
     static bool IsExiting();
     static void GameLoop(sf::Clock & clock);
@@ -30,6 +33,7 @@ private:
     static GameState _gameState;
     static sf::RenderWindow _mainWindow;
     static GameObjectManager _gameObjectManager;
+    static ScoreBoard* _scoreBoard;
 };
 
 

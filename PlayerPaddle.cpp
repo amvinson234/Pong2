@@ -30,17 +30,32 @@ float PlayerPaddle::GetVelocity() const
 
 void PlayerPaddle::Update(float elapsedTime)
 {
-
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+//    string player;
+    sf::Keyboard::Key key_right;
+    sf::Keyboard::Key key_left;
+    if (dynamic_cast<PlayerPaddle*>(Game::GetGameObjectManager().Get("Paddle1")) == this)
     {
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) _velocity -= 3.0f;
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) _velocity += 3.0f;
+        key_right = sf::Keyboard::Right;
+        key_left = sf::Keyboard::Left;
+    }
+    else if (dynamic_cast<PlayerPaddle*>(Game::GetGameObjectManager().Get("Paddle2")) == this)
+    {
+        key_right = sf::Keyboard::D;
+        key_left = sf::Keyboard::A;
+    }
+    else assert(0);
+
+    if(sf::Keyboard::isKeyPressed(key_left) || sf::Keyboard::isKeyPressed(key_right))
+    {
+        if(sf::Keyboard::isKeyPressed(key_left)) _velocity -= 3.0f;
+        if(sf::Keyboard::isKeyPressed(key_right)) _velocity += 3.0f;
     }
     else
     {
         _velocity -= elapsedTime*5*_velocity; //subtract off 5*velocity per second
     }
    // _velocity = 0;
+
 
     if(_velocity > _maxVelocity) _velocity = _maxVelocity;
     if(_velocity < -_maxVelocity) _velocity = -_maxVelocity;

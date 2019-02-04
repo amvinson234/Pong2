@@ -75,3 +75,8 @@ bool VisibleGameObject::IsLoaded() const
 {
     return _isLoaded;
 }
+
+void VisibleGameObject::setAsLoaded()
+{
+    _isLoaded = true;
+}
