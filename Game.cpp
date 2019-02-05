@@ -84,13 +84,11 @@ void Game::GameLoop(sf::Clock& clock)
             }
             if(currentEvent.type == sf::Event::KeyPressed && currentEvent.key.code == sf::Keyboard::P)
             {
-                std::cerr << " Paused ? " << std::endl;
                 while(1)
                 {
                     _mainWindow.pollEvent(currentEvent);
                     if(currentEvent.type == sf::Event::KeyPressed && currentEvent.key.code == sf::Keyboard::P)
                     {
-                        std::cerr << " end pause " << std::endl;
                         break;
                     }
                     clock.restart();

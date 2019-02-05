@@ -106,13 +106,13 @@ void GameBall::Update(float elapsedTime)
             if(playerVelocity < 10)
             {
                 //moving left
-                _angle -= 20; //give angle an extra kick leftward if paddle moving left
+                _angle += 20; //give angle an extra kick leftward if paddle moving left
                 if(_angle < 0) _angle = 360 - _angle;
             }
             else if (playerVelocity > 10)
             {
                 //moving right
-                _angle += 20; //give angle extra kick rightward if paddle moving right
+                _angle -= 20; //give angle extra kick rightward if paddle moving right
                 if(_angle > 360) _angle -= 360;
             }
             _velocity += 5.0f; //add to velocity after each hit of the paddle
