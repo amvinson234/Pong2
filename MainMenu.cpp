@@ -25,9 +25,12 @@ MainMenu::MenuResult MainMenu::Show(sf::RenderWindow& window)
     sf::FloatRect optionsBounds = options_text.getLocalBounds();
     sf::FloatRect exitBounds = exit_text.getLocalBounds();
 
-    play_text.setPosition(window.getSize().x / 2 - playBounds.width / 2 , window.getSize().y / 2 - 140);
-    options_text.setPosition(window.getSize().x / 2 - playBounds.width / 2 , window.getSize().y / 2 );
-    exit_text.setPosition(window.getSize().x / 2 - exitBounds.width / 2 , window.getSize().y / 2 + 140);
+    play_text.setOrigin(play_text.getLocalBounds().width / 2, play_text.getLocalBounds().height/2);
+    options_text.setOrigin(options_text.getLocalBounds().width / 2, options_text.getLocalBounds().height/2);
+    exit_text.setOrigin(exit_text.getLocalBounds().width / 2, exit_text.getLocalBounds().height / 2);
+    play_text.setPosition(window.getSize().x / 2 , window.getSize().y / 2 - 140);
+    options_text.setPosition(window.getSize().x / 2, window.getSize().y / 2 );
+    exit_text.setPosition(window.getSize().x / 2, window.getSize().y / 2 + 140);
 
     playBounds = play_text.getGlobalBounds();
     optionsBounds = options_text.getGlobalBounds();

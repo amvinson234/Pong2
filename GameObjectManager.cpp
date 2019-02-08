@@ -21,10 +21,10 @@ void GameObjectManager::Add(std::string name, VisibleGameObject* gameObject)
 void GameObjectManager::Remove(std::string name)
 {
     std::map<std::string,VisibleGameObject*>::iterator results = _gameObjects.find(name);
-    results->second->~VisibleGameObject();
+    //results->second->~VisibleGameObject();
     if(results != _gameObjects.end())
     {
-      //  delete results->second; //deletes pointer to game object
+        delete results->second; //deletes pointer to game object
         _gameObjects.erase(results); //removes from list of game objects
     }
 }
