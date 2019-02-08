@@ -34,6 +34,11 @@ void VisibleGameObject::Update(float elapsedTime)
 {
 }
 
+std::string VisibleGameObject::GetFilename()
+{
+    return _filename;
+}
+
 float VisibleGameObject::GetHeight() const
 {
     return _sprite.getLocalBounds().height;

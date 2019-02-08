@@ -60,4 +60,37 @@ void ScoreBoard::Draw(sf::RenderWindow & rw)
     rw.draw(scorePlayer1);
     rw.draw(scorePlayer2);
     rw.draw(timer);
+
+    if(_score1 >= GameSettings::maxScore)
+    {
+        _status = EndGame;
+        sf::Text game_end;
+        game_end.setFont(font);
+        game_end.setCharacterSize(60);
+        game_end.setColor(sf::Color::Black);
+        game_end.setString("PLAYER 1\n WINS!!!");
+        game_end.setOrigin(game_end.getLocalBounds().width / 2, game_end.getLocalBounds().height / 2);
+        game_end.setPosition(Game::SCREEN_WIDTH / 2, Game::SCREEN_HEIGHT /2);
+        rw.draw(game_end);
+    }
+    if(_score2 >= GameSettings::maxScore)
+    {
+        _status = EndGame;
+        sf::Text game_end;
+        game_end.setFont(font);
+        game_end.setCharacterSize(60);
+        game_end.setColor(sf::Color::Black);
+        game_end.setString("PLAYER 2\n WINS!!!");
+        game_end.setOrigin(game_end.getLocalBounds().width / 2, game_end.getLocalBounds().height / 2);
+        game_end.setPosition(Game::SCREEN_WIDTH / 2, Game::SCREEN_HEIGHT /2);
+        rw.draw(game_end);
+    }
+
 }
+
+int ScoreBoard::gameStatus()
+{
+    return _status;
+}
+
+ScoreBoard::Status ScoreBoard::_status = Playing;

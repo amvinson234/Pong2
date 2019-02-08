@@ -4,6 +4,7 @@
 #include "SFML/Graphics.hpp"
 #include "VisibleGameObject.h"
 #include <string>
+#include "Settings.h"
 
 class ScoreBoard
 {
@@ -15,6 +16,10 @@ public:
     void Draw(sf::RenderWindow & rw);
     void UpdateScore1();
     void UpdateScore2();
+    int gameStatus();
+
+    enum Status {Playing, EndGame};
+    static Status _status;
 
 private:
     int _score1;

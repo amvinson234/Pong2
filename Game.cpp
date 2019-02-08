@@ -38,7 +38,7 @@ bool Game::IsExiting()
     else return false;
 }
 
-const GameObjectManager& Game::GetGameObjectManager()
+GameObjectManager& Game::GetGameObjectManager()
 {
     return _gameObjectManager;
 }
@@ -75,11 +75,6 @@ void Game::GameLoop(sf::Clock& clock)
         {
             _mainWindow.clear(sf::Color(0,100,200));
 
-            _scoreBoard->Draw(_mainWindow);
-            _scoreBoard->Update(elapsedTime);
-            _totalElapsedTime += elapsedTime;
-
-
             if(_ballCount < GameSettings::maxBalls && _totalElapsedTime > GameSettings::ballFreq * _ballCount)
             {
                 _gameObjectManager.Add("Ball" + std::to_string(_ballCount), new GameBall());
@@ -88,8 +83,18 @@ void Game::GameLoop(sf::Clock& clock)
             _gameObjectManager.UpdateAll(elapsedTime);
             _gameObjectManager.DrawAll(_mainWindow);
 
+            _scoreBoard->Draw(_mainWindow);
+            _scoreBoard->Update(elapsedTime);
+            if(_scoreBoard->gameStatus() == 1)
+            {
+                _gameState = Paused;
+                _scoreBoard->~ScoreBoard();
+                _gameObjectManager.RemoveAll();
+            }
+            _totalElapsedTime += elapsedTime;
 
             _mainWindow.display();
+
 
             if(currentEvent.type == sf::Event::Closed)
             {
@@ -101,19 +106,37 @@ void Game::GameLoop(sf::Clock& clock)
                 _gameState = Game::ShowingMenu;
                 _scoreBoard->~ScoreBoard();
             }
-            if(currentEvent.type == sf::Event::KeyPressed && currentEvent.key.code == sf::Keyboard::P)
-            {
-                while(1)
-                {
-                    _mainWindow.pollEvent(currentEvent);
-                    if(currentEvent.type == sf::Event::KeyPressed && currentEvent.key.code == sf::Keyboard::P)
-                    {
-                        break;
-                    }
-                    clock.restart();
-                }
-            }
+            if(currentEvent.type == sf::Event::KeyPressed && currentEvent.key.code == sf::Keyboard::P) _gameState = Paused;
 
+
+            break;
+        }
+
+    case Game::Paused:
+        {
+            while(1)
+            {
+                _mainWindow.pollEvent(currentEvent);
+                if(currentEvent.type == sf::Event::KeyPressed && currentEvent.key.code == sf::Keyboard::P)
+                {
+                    _gameState = Playing;
+                    break;
+                }
+                if(currentEvent.type == sf::Event::Closed)
+                {
+                    _gameState = Game::Exiting;
+                    break;
+                }
+                if(currentEvent.type == sf::Event::KeyPressed && currentEvent.key.code == sf::Keyboard::Escape)
+                {
+                    _gameObjectManager.RemoveAll();
+                    _gameState = Game::ShowingMenu;
+                    _scoreBoard->~ScoreBoard();
+                    break;
+                }
+                clock.restart();
+            }
+            break;
         }
 
     }
@@ -157,6 +180,9 @@ void Game::ShowMenu()
         _gameState = Game::Playing;
 
         _scoreBoard = new ScoreBoard();
+        _ballCount = 1;
+        _totalElapsedTime = 0.0;
+        ScoreBoard::_status = ScoreBoard::Playing;
         break;
     }
 }

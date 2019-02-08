@@ -6,6 +6,7 @@
 #include <cmath>
 #include <cassert>
 #include <iostream>
+#include <string>
 #include "ScoreBoard.h"
 #include "Settings.h"
 
@@ -17,6 +18,7 @@ GameBall::GameBall() :
     assert(IsLoaded());
 
     GetSprite().setOrigin(15,15);
+    GetSprite().setPosition(Game::SCREEN_WIDTH/2, Game::SCREEN_HEIGHT/2);
 
     //set random angle between 0 and 360 degrees
     srand(time(NULL));
@@ -126,21 +128,17 @@ void GameBall::Update(float elapsedTime)
             if(GetPosition().y + GetHeight()/2 + moveByY >= Game::SCREEN_HEIGHT)  scoreBoard->UpdateScore2();
             //If fell below or above bounds
             //Move to middle of the screen for now and randomize angle, if current ball is only 1
+            GetSprite().setPosition(Game::SCREEN_WIDTH/2, Game::SCREEN_HEIGHT/2);
+            _angle = rand() % 361;
+            _velocity = GameSettings::initialSpeed;
+            _elapsedTimeSinceStart = 0.0f;
 
-            //if(Game::_ballCount <= 1)
-            //{
-                GetSprite().setPosition(Game::SCREEN_WIDTH/2, Game::SCREEN_HEIGHT/2);
-                _angle = rand() % 361;
-                _velocity = GameSettings::initialSpeed;
-                _elapsedTimeSinceStart = 0.0f;
-            //}
-            /*
-            else
+            if(Game::_ballCount > 1)
             {
+                std::string fileName = this->GetFilename();
+                Game::GetGameObjectManager().Remove(fileName);
                 Game::_ballCount--;
-                this->~GameBall();=
             }
-            */
         }
 
 

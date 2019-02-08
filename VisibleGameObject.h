@@ -16,6 +16,8 @@ public:
     virtual void Draw(sf::RenderWindow & window);
     virtual void Update(float elapsedTime);
 
+    virtual std::string GetFilename();
+
     virtual float GetWidth() const;
     virtual float GetHeight() const;
     virtual sf::FloatRect GetBoundingRect() const;

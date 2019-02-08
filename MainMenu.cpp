@@ -84,6 +84,3 @@ MainMenu::MenuResult MainMenu::GetMenuResponse(sf::RenderWindow& window)
         }
     }
 }
-
-
-

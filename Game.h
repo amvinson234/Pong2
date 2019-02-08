@@ -17,7 +17,7 @@ public:
     const static int SCREEN_WIDTH = 1024;
     const static int SCREEN_HEIGHT = 768;
 
-    const static GameObjectManager& GetGameObjectManager();
+    static GameObjectManager& GetGameObjectManager();
 
     static ScoreBoard* GetScoreBoard();
 

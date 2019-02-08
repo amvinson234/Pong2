@@ -93,14 +93,11 @@ OptionsMenu::OptionsMenu()
 
         ctr++;
     }
-
-
 }
 
 OptionsMenu::~OptionsMenu()
 {
 }
-
 
 std::string OptionsMenu::Response(sf::RenderWindow & rw)
 {
