@@ -7,9 +7,10 @@
 #include <cassert>
 #include <iostream>
 #include "ScoreBoard.h"
+#include "Settings.h"
 
 GameBall::GameBall() :
-    _velocity(220.0f),
+    _velocity(float(GameSettings::initialSpeed)),
     _elapsedTimeSinceStart(0.0f)
 {
     Load("images/ball.png");
@@ -84,7 +85,7 @@ void GameBall::Update(float elapsedTime)
                 _angle += 20; //give angle extra kick rightward if paddle moving right
                 if(_angle > 360) _angle -= 360;
             }
-            _velocity += 5.0f; //add to velocity after each hit of the paddle
+            _velocity += GameSettings::speedIncrement; //add to velocity after each hit of the paddle
         }
 
 
@@ -115,7 +116,7 @@ void GameBall::Update(float elapsedTime)
                 _angle -= 20; //give angle extra kick rightward if paddle moving right
                 if(_angle > 360) _angle -= 360;
             }
-            _velocity += 5.0f; //add to velocity after each hit of the paddle
+            _velocity += GameSettings::speedIncrement; //add to velocity after each hit of the paddle
         }
 
         if(GetPosition().y + GetHeight()/2 + moveByY >= Game::SCREEN_HEIGHT
@@ -123,13 +124,23 @@ void GameBall::Update(float elapsedTime)
         {
             if(GetPosition().y - GetHeight()/2 + moveByY < 0) scoreBoard->UpdateScore1();
             if(GetPosition().y + GetHeight()/2 + moveByY >= Game::SCREEN_HEIGHT)  scoreBoard->UpdateScore2();
-            //If fell below lower bounds
-            //Move to middle of the screen for now and randomize angle
-            GetSprite().setPosition(Game::SCREEN_WIDTH/2, Game::SCREEN_HEIGHT/2);
-            _angle = rand() % 361;
-            _velocity = 220.0f;
-            _elapsedTimeSinceStart = 0.0f;
+            //If fell below or above bounds
+            //Move to middle of the screen for now and randomize angle, if current ball is only 1
 
+            //if(Game::_ballCount <= 1)
+            //{
+                GetSprite().setPosition(Game::SCREEN_WIDTH/2, Game::SCREEN_HEIGHT/2);
+                _angle = rand() % 361;
+                _velocity = GameSettings::initialSpeed;
+                _elapsedTimeSinceStart = 0.0f;
+            //}
+            /*
+            else
+            {
+                Game::_ballCount--;
+                this->~GameBall();=
+            }
+            */
         }
 
 

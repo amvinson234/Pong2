@@ -6,8 +6,11 @@
 #include "PlayerPaddle.h"
 #include "GameBall.h"
 #include "GameObjectManager.h"
+#include "Menu.h"
+#include "OptionsMenu.h"
 #include "ScoreBoard.h"
 #include <iostream>
+#include "Settings.h"
 
 void Game::Start(void)
 {
@@ -59,13 +62,29 @@ void Game::GameLoop(sf::Clock& clock)
             ShowSplashScreen();
             break;
         }
+    case Game::ShowingOptions:
+        {
+            ShowOptions();
+            if(currentEvent.type == sf::Event::Closed)
+            {
+                _gameState = Game::Exiting;
+            }
+            break;
+        }
     case Game::Playing:
         {
             _mainWindow.clear(sf::Color(0,100,200));
 
             _scoreBoard->Draw(_mainWindow);
             _scoreBoard->Update(elapsedTime);
+            _totalElapsedTime += elapsedTime;
 
+
+            if(_ballCount < GameSettings::maxBalls && _totalElapsedTime > GameSettings::ballFreq * _ballCount)
+            {
+                _gameObjectManager.Add("Ball" + std::to_string(_ballCount), new GameBall());
+                _ballCount++;
+            }
             _gameObjectManager.UpdateAll(elapsedTime);
             _gameObjectManager.DrawAll(_mainWindow);
 
@@ -119,6 +138,9 @@ void Game::ShowMenu()
     case MainMenu::Exit:
         _gameState = Game::Exiting;
         break;
+    case MainMenu::Options:
+        _gameState = Game::ShowingOptions;
+        break;
     case MainMenu::Play:
         PlayerPaddle *player1 = new PlayerPaddle();
         PlayerPaddle *player2 = new PlayerPaddle();
@@ -135,9 +157,16 @@ void Game::ShowMenu()
         _gameState = Game::Playing;
 
         _scoreBoard = new ScoreBoard();
-
         break;
     }
+}
+
+void Game::ShowOptions()
+{
+    OptionsMenu optionsMenu;
+    std::string response = optionsMenu.Response(_mainWindow);
+    if(response == "GO BACK") _gameState = ShowingMenu;
+    if(response == "CLOSE") _gameState = Exiting;
 }
 
 ScoreBoard* Game::GetScoreBoard()
@@ -149,3 +178,6 @@ Game::GameState Game::_gameState = Uninitialized;
 sf::RenderWindow Game::_mainWindow;
 GameObjectManager Game::_gameObjectManager;
 ScoreBoard *Game::_scoreBoard;
+float Game::_totalElapsedTime = 0.0;
+int Game::_ballCount = 1;
+

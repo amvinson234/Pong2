@@ -21,19 +21,24 @@ public:
 
     static ScoreBoard* GetScoreBoard();
 
+    static int _ballCount;
+
+
 private:
     static bool IsExiting();
     static void GameLoop(sf::Clock & clock);
 
     static void ShowSplashScreen();
     static void ShowMenu();
-
-    enum GameState {Uninitialized, ShowingSplash, Paused, ShowingMenu, Playing, Exiting};
+    static void ShowOptions();
+    enum GameState {Uninitialized, ShowingSplash, Paused, ShowingMenu, ShowingOptions, Playing, Exiting};
 
     static GameState _gameState;
     static sf::RenderWindow _mainWindow;
     static GameObjectManager _gameObjectManager;
     static ScoreBoard* _scoreBoard;
+    static float _totalElapsedTime;
+    static int _totalCount;
 };
 
 

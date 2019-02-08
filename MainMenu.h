@@ -6,7 +6,7 @@
 class MainMenu
 {
 public:
-    enum MenuResult {Nothing, Exit, Play};
+    enum MenuResult {Nothing, Exit, Options, Play};
 
     struct MenuItem
     {
