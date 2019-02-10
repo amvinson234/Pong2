@@ -1,6 +1,6 @@
 # Pong2
 
-A self-learning project to learn some basic game design using SFML.
+A self-learning project to learn some basic game design using SFML. You will require the SFML C++ library to build from the source code presented here.
 
 This is largely based on a useful tutorial by the website GameFromScratch. But I did not follow the tutorial to the letter, and did many things differently, while adding a variety of features. (The tutorial is also a bit dated, using SFML 1.x, where I used version 2 here.)
 
