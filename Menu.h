@@ -34,21 +34,3 @@ private:
 
 
 #endif // MENU_H_INCLUDED
-
-
-/*In Game.h and Game.cpp
-
-Will add OptionsMenu to _gameState.
-Will add ShowOptions() function, which runs in Game Loop when _gameState = OptionsMenu
-
-void ShowOptions()
-{
-    OptionsMenu optionsMenu;
-    OptionsMenu::MenuItem result.GetResponse(_mainWindow);
-    if(result.result == "Go Back")
-        _gameState = MainMenu;
-}
-
-Here GetResponse will draw menu items and return selected menu item, along with which possible subitems were clicked, and handle those which will value and dynamically cast to Game.h/cpp to change Game values.
-GetResponse will call HandleClick to see if any of its FloatRects were clicked on. If option1 or option2 were clicked, it will change member 'value' appropriately
-*/
