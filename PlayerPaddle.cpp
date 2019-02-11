@@ -66,5 +66,10 @@ void PlayerPaddle::Update(float elapsedTime)
     }
 
     float x_move = _velocity * elapsedTime;
+
     GetSprite().move(x_move,0);
+
+    if(GetSprite().getPosition().x < 1) GetSprite().setPosition(1,GetSprite().getPosition().y);
+    if(GetSprite().getPosition().x > Game::SCREEN_WIDTH - 1) GetSprite().setPosition(Game::SCREEN_WIDTH - 1,GetSprite().getPosition().y);
+
 }
