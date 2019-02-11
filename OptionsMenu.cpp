@@ -103,8 +103,7 @@ std::string OptionsMenu::Response(sf::RenderWindow & rw)
 {
     std::list<MenuItem>::iterator it;
     std::list<MenuItem> *menuItems = GetMenuItems();
-    std::string getString;
-    getString = menuItems->begin()->itemBox.getString();
+//    std::string getString = menuItems->begin()->itemBox.getString();
 
 
     sf::Event event;
@@ -129,14 +128,14 @@ std::string OptionsMenu::Response(sf::RenderWindow & rw)
             sf::Text text;
             if (response.itemBox.getString() == it->itemBox.getString() && it->optionBox1.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
             {
-                if(response.itemBox.getString() == "Initial Ball Speed") *(it->value) += 5;
+                if((response.itemBox.getString() == "Initial Ball Speed" || response.itemBox.getString() == "Frequency of New Balls") && *(it->value) >= 10) *(it->value) += 5;
                 else *(it->value) += 1;
                 it->valueBox.setString(std::to_string(*(it->value)));
             }
             sf::FloatRect option2rect(it->optionBox2.getGlobalBounds().left,it->optionBox2.getGlobalBounds().top - it->optionBox2.getGlobalBounds().width / 2 ,it->optionBox2.getGlobalBounds().width,it->optionBox2.getGlobalBounds().width);
             if (response.itemBox.getString() == it->itemBox.getString() && option2rect.contains(event.mouseButton.x, event.mouseButton.y))
             {
-                if(response.itemBox.getString() == "Initial Ball Speed" && *(it->value) > 10) *(it->value) -= 5;
+                if((response.itemBox.getString() == "Initial Ball Speed" || response.itemBox.getString() == "Frequency of New Balls") && *(it->value) > 10) *(it->value) -= 5;
                 else if(*(it->value) > 1) *(it->value) -= 1;
                 it->valueBox.setString(std::to_string(*(it->value)));
             }
