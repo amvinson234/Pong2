@@ -45,8 +45,10 @@ void GameBall::Update(float elapsedTime)
         || GetPosition().x + GetHeight()/2 + moveByX >= Game::SCREEN_WIDTH)
     {
         _angle = 360 - _angle;
-        if(_angle > 260 && _angle < 280) _angle += 20; //So doesn't bounce back parallel to the paddles
-        if(_angle > 80 && _angle < 100) _angle += 20;
+        if(_angle > 260 && _angle <= 270) _angle = 260; //So doesn't bounce back parallel to the paddles
+        if(_angle > 270 && _angle < 280) _angle = 280;
+        if(_angle > 80 && _angle <= 90 ) _angle = 80;
+        if(_angle > 90 && _angle < 100) _angle = 100;
         moveByX = -moveByX;
     }
 
@@ -88,6 +90,9 @@ void GameBall::Update(float elapsedTime)
                 if(_angle > 360) _angle -= 360;
             }
             _velocity += GameSettings::speedIncrement; //add to velocity after each hit of the paddle
+
+            if(_angle > 80 && _angle <= 180) _angle = 80; //So doesn't score on self
+            if(_angle > 180 && _angle < 280) _angle = 280;
         }
 
 
@@ -119,6 +124,9 @@ void GameBall::Update(float elapsedTime)
                 if(_angle > 360) _angle -= 360;
             }
             _velocity += GameSettings::speedIncrement; //add to velocity after each hit of the paddle
+
+            if(_angle > 0 && _angle < 100 ) _angle = 100;
+            if(_angle > 260 && _angle <= 360 ) _angle = 260;
         }
 
         if(GetPosition().y + GetHeight()/2 + moveByY >= Game::SCREEN_HEIGHT
