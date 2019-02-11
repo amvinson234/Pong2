@@ -60,16 +60,18 @@ void PlayerPaddle::Update(float elapsedTime)
     sf::Vector2f pos = GetPosition();
 
 
-    if(pos.x < GetSprite().getLocalBounds().width/2 || pos.x > (Game::SCREEN_WIDTH - GetSprite().getLocalBounds().width/2))
+    if (pos.x < GetSprite().getLocalBounds().width/2)
     {
-        _velocity = -_velocity; //bounce
+        if (_velocity < 0) _velocity *= -1;
+    }
+
+    else if (pos.x > (Game::SCREEN_WIDTH - GetSprite().getLocalBounds().width/2))
+    {
+        if (_velocity > 0) _velocity *= -1;
     }
 
     float x_move = _velocity * elapsedTime;
 
     GetSprite().move(x_move,0);
-
-    if(GetSprite().getPosition().x < 1) GetSprite().setPosition(1,GetSprite().getPosition().y);
-    if(GetSprite().getPosition().x > Game::SCREEN_WIDTH - 1) GetSprite().setPosition(Game::SCREEN_WIDTH - 1,GetSprite().getPosition().y);
 
 }
